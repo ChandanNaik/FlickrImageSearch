@@ -1,7 +1,5 @@
 Flickr
 App name - BigDataApp
-Key - 72867a4388924cd9840ae813f23a70cf
-Secret - 49021d0404efb5c3
 
 Main API Doc - https://www.flickr.com/services/api/
 API Explorer - https://www.flickr.com/services/api/explore/flickr.photos.search
@@ -15,5 +13,3 @@ https://www.youtube.com/watch?v=19-LOqdI61k
 
 (Not very useful, but some videos on how to use the Flickr API)
 https://www.youtube.com/watch?v=jLBGz1jtkRo&list=PLylMDDjFIp1DbH0bk5ud36l-OScl0Phf1
-
-Divya
