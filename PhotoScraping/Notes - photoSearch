@@ -1,0 +1,17 @@
+Flickr
+App name - BigDataApp
+Key - 72867a4388924cd9840ae813f23a70cf
+Secret - 49021d0404efb5c3
+
+Main API Doc - https://www.flickr.com/services/api/
+API Explorer - https://www.flickr.com/services/api/explore/flickr.photos.search
+How to convert from obtained image json data to image URL - https://www.flickr.com/services/api/misc.urls.html
+
+Useful to view json data - http://json.parser.online.fr
+
+Videos 
+How to use REST APIs in general with Python
+https://www.youtube.com/watch?v=19-LOqdI61k
+
+(Not very useful, but some videos on how to use the Flickr API)
+https://www.youtube.com/watch?v=jLBGz1jtkRo&list=PLylMDDjFIp1DbH0bk5ud36l-OScl0Phf1
