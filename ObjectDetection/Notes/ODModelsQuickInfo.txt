@@ -1,0 +1,16 @@
+Datasets use to generate the pretrained model:
+ PASCAL Visual Object Classification (PASCAL VOC) :contains only 20 categories
+ ImageNet: 500000 images only for training and 200 categories
+ Common Objects in COntext (COCO) : contains 80 categories, 120 000 images for training,more than 40 000 images for testing
+ 
+Techniques use:
+ Region-based Convolutional Network (R-CNN)
+ Fast Region-based Convolutional Network (Fast R-CNN)
+ Faster Region-based Convolutional Network (Faster R-CNN)
+ Region-based Fully Convolutional Network (R-FCN)
+ You Only Look Once (YOLO)
+ Single-Shot Detector (SSD)
+ YOLO9000 [This is the one we want, but we are using ResNet now]
+ 
+ Link to details:
+ https://medium.com/zylapp/review-of-deep-learning-algorithms-for-object-detection-c1f3d437b852
