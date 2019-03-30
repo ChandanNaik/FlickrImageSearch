@@ -22,3 +22,8 @@ for photoData in photosData:
 	if count%20 == 0:
 		imageUrl = 'https://farm'+str(photoData["farm"])+'.staticflickr.com/'+photoData["server"]+'/'+photoData["id"]+'_'+photoData["secret"]+'.jpg'
 		webbrowser.open(imageUrl)
+        
+        
+##################################################################################################
+## Attempt 2:  
+##################################################################################################
