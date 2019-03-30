@@ -1,0 +1,10 @@
+
+Bucket Name:  flickrbigdatacu
+
+1. Install boto3 
+
+2. Install AWS CLI (AWS CLI - https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+
+3. Set up AWS creds
+
+4. Run the upload code - dumpToBucket.py (Uses ideas from https://realpython.com/python-boto3-aws-s3/#creating-a-bucket)
