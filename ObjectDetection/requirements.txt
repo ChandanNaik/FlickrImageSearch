@@ -1,0 +1,25 @@
+ML Model Requirements!
+Download/ Upgrade:
+1. Tensorflow 1.4.0 or higher
+	pip3 install --upgrade tensorflow
+2. Numpy 1.13.1 or higher
+	pip3 install numpy
+3. SciPy .19.1 or higher	
+	pip3 install scipy
+4. OpenCV
+	pip3 install opencv-python
+5. Pillow
+	pip3 install pillow
+6. Mathplotlib
+	pip3 install matplotlib
+7. h5py
+	pip3 install h5py
+8. Keras
+	pip3 install keras
+9. ImageAI
+	pip3 install https://github.com/OlafenwaMoses/ImageAI/releases/download/2.0.2/imageai-˓→2.0.2-py3-none-any.wh
+10. Pretrained Model 
+	- SqueezeNet (Size = 4.82 mb, fastest prediction time and moderate accuracy)
+	- ResNet50 by Microsoft Research (Size = 98 mb, fast prediction time and high accuracy)
+	- InceptionV3 by Google Brain team (Size = 91.6 mb, slow prediction time and higher accuracy)
+	- DenseNet121 by Facebook AI Research (Size = 31.6 mb, slower prediction time and highest accuracy) 
