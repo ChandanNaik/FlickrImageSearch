@@ -1,0 +1,7 @@
+search pipeline:
+ 1. get image from user: generate tags
+ 2. get index of all images in the DB with these tags
+	2a. have inverted index of whre the tags occur	 
+ 3. calculate cosine similarity between the in input and the images returned from the db
+ 4. Rank the images return to x based on what the user wants
+ 
