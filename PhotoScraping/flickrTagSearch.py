@@ -5,7 +5,7 @@ Created on Wed Mar 27 21:49:28 2019
 @author: divya
 """
 
-import flickrapi
+import flickrapicsv 
 import pandas as pd
 import sys
 ################################################
