@@ -14,3 +14,5 @@ Techniques use:
  
  Link to details:
  https://medium.com/zylapp/review-of-deep-learning-algorithms-for-object-detection-c1f3d437b852
+ 
+ https://github.com/OlafenwaMoses/ImageAI/tree/master/imageai/Prediction#inputtype
