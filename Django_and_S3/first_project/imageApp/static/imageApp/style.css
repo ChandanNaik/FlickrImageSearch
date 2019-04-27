@@ -1,0 +1,74 @@
+.row {
+	display: flex;
+	height: inherit;
+
+}
+
+.column {
+	flex: 50%;
+	color: #e5d5dc;
+	font-family: sans-serif;
+	font-weight: 900;
+	padding: 10px;
+	height: auto;
+}
+
+#resultImages{
+	list-style: none;
+	
+}
+
+#searchTitle{
+	height: 30px;
+	margin: 10px;
+}
+
+#resultTitle{
+	height: 30px;
+	margin: 10px;
+}
+
+#columnLeft{
+	background-color: #98506d
+}
+
+#columnRight{
+	background-color: #cf605e
+}
+
+body{
+        margin: 0px;
+        padding: 0px;
+    }
+
+input{
+	
+	background-color: #ff994c;
+	color: white;
+	padding: 5px;
+	font-weight: bold;
+	border: 0px;
+
+}
+
+
+#id_imageFile{
+	display: none;
+}
+
+label[for="id_imageFile"]{
+	
+	background-color: #ff994c;
+	color: white;
+	padding: 5px;
+	font-weight: bold;
+	border: 0px;
+	font-size: 11px;
+}
+
+html { 
+    height:100%;
+}
+body { 
+    min-height:100%;
+}
