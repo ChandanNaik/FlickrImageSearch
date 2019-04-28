@@ -5,7 +5,7 @@ Created on Sat Mar 30 15:54:59 2019
 @author: divya
 """
 
-from imageai.Prediction importImagePrediction
+from imageai.Prediction import ImagePrediction
 import os
 execution_path = os.getcwd()
 multiple_prediction = ImagePrediction()

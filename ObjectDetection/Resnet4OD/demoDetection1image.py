@@ -12,7 +12,7 @@ import os
 execution_path = os.getcwd()
 detector = ObjectDetection()
 detector.setModelTypeAsRetinaNet()
-detector.setModelPath( os.path.join(execution_path , "resnet50_coco_best_v2.0.1.h5"))
+detector.setModelPath(os.path.join(execution_path , "resnet50_coco_best_v2.0.1.h5"))
 detector.loadModel()
 imagename="7691332970_b05c77bdd0_o.jpg"
 detections = detector.detectObjectsFromImage(input_image=os.path.join(execution_path , imagename), output_image_path=os.path.join(execution_path , imagename))
