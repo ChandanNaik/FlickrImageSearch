@@ -127,11 +127,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'imageApp', 'static'),
 )
 
-#Absolute filesystem path to the directory that will hold user-uploaded files
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'first_project/media')
-
-#URL that handles the media served from MEDIA_ROOT
-#MEDIA_URL = '/media/'
 
 #set S3 as the place to store your files.
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

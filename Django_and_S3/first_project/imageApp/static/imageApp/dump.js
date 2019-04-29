@@ -11,15 +11,3 @@ $("#dumpButton").click(function (e) {
 
   });
 
-$("#dbButton").click(function (e) {
-  console.log("Connecting to DB...")
-  e.preventDefault();
-  $.ajax({
-      type: "GET",
-      url: '/imageSearch/testDB',
-      success: function (data) {
-            console.log("Connected successfully");
-      }
-    });
-
-  });

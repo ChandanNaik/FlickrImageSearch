@@ -13,9 +13,10 @@
                     {% if image %}
                             <ul>
                             {% for img in image %}
-                                    <a href="{{ img.imageFile.url }}">
-                                    <img src="{{ img.imageFile.url }}" alt="{{ img.imageFile.name }}">
-                                    </a>
+                                    
+                                    <img src= "{{ imagePath }}" alt="{{ img.imageFile.name }}">
+                                    <img src= "/static/imageApp/searchUploads/taggedSearchImage.jpg">
+                                    
                             {% endfor %}
                             </ul>
                     {% else %}

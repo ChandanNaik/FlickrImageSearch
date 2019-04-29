@@ -107,7 +107,6 @@ def performDumpFunction(request):
 				listName = tagImage(detector)
 
 				#If tags are obtained, then store in dictionary and upload
-				#listName = [("abc",0.2), ("def",0.4), ("ghi",0.5)]
 
 				#Store in dictionary 
 				#ML tags
@@ -148,7 +147,6 @@ def performDumpFunction(request):
 				logging.debug(image_dictionary)
 
 				insertImage(image_dictionary['name'], image_dictionary)
-				logging.debug("$$$$$$$$$$$$$$$")
 				photoCnt+=1
 				
 				#Upload image to S3 Bucket
