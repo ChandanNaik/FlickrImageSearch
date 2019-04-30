@@ -125,3 +125,18 @@ result = collect.find().limit(5)
 for x in result:
   print(x) 
   
+  
+######################################################
+##Insert Update
+#####################################################
+  
+def insertImage(image, query, collect):
+    x=collect.find({"name":image})
+    if x.count()==0:
+       x = collect.insert_one(query)
+       
+
+        
+ 
+for y in x:
+  print(y)   
