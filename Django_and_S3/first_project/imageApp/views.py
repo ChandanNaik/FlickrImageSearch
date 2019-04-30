@@ -25,6 +25,7 @@ from imageApp.flickrToS3 import performDumpFunction
 
 
 def search(request):
+	execution_path = os.getcwd()
 	if request.method == 'POST':
 		form = imageForm(request.POST, request.FILES)
 
@@ -35,13 +36,6 @@ def search(request):
 			image = imageModel.objects.all()
 
 			#Generate ML tags for the user uploaded image
-			execution_path = os.getcwd()
-			if not search.detector: 
-				search.detector = ObjectDetection()
-				search.detector.setModelTypeAsRetinaNet()
-				search.detector.setModelPath(os.path.join(execution_path , "imageApp", "resnet50_coco_best_v2.0.1.h5"))
-				search.detector.loadModel()
-
 			outputPath = os.path.join(execution_path , "imageApp/static/imageApp/searchUploads", "taggedSearchImage.jpg")
 			inputPath = os.path.join(execution_path , "imageApp/static/imageApp/searchUploads", image[0].imageFile.name)
 
@@ -57,6 +51,11 @@ def search(request):
 			return render(request, 'imageApp/search.html', {'image':image, 'form':form, 'imagePath':"/static/imageApp/searchUploads/"+ image[0].imageFile.name})
 			
 	else:
+		if not search.detector: 
+			search.detector = ObjectDetection()
+			search.detector.setModelTypeAsRetinaNet()
+			search.detector.setModelPath(os.path.join(execution_path , "imageApp", "resnet50_coco_best_v2.0.1.h5"))
+			search.detector.loadModel()
 		if(imageModel.objects.all().count()>0):
 			imageModel.objects.all().delete()
 		form = imageForm()
