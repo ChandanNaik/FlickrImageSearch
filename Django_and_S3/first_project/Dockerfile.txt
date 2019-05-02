@@ -1,0 +1,17 @@
+FROM python:3.7
+
+MAINTAINER Sravanth
+
+ENV PYTHONUNBUFFERED 1
+
+RUN mkdir /first_project
+
+WORKDIR /first_project
+
+COPY . /first_project
+
+RUN pip3 install -r requirements.txt
+
+ADD https://github.com/OlafenwaMoses/ImageAI/releases/download/1.0/resnet50_coco_best_v2.0.1.h5  /first_project/imageApp/
+
+EXPOSE 8000
