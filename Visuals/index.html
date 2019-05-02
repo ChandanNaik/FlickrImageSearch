@@ -76,7 +76,7 @@
 <section id="blog">
      <div class="container">
           <div class="row">
-                    <!-- Upload Section -->
+                    <!-- Upload and Search Section -->
                     <div class="col-md-offset-1 col-md-10 col-sm-12">
 
                         <div class="blog-post-title">
@@ -93,15 +93,16 @@
 
                                   <div class="uploadWrapper">
                                     <div class="file-upload" style="font-size: 1rem;">
-                                        <input type="file" class="file-input" accept="image/jpeg, image/png", "image/jpg"/>
+                                        <input type="file" class="file-input" accept="image/jpeg, image/png, image/jpg"/>
                                         <i class="fa fa-arrow-up fa-3x"></i>
                                     </div>
                                     <span>
                                       &nbsp &nbsp
                                     </span>
                                     <div class="file-upload" style="font-size: 1rem;">
-                                        <!-- <input type="file" class="file-input" accept="image/jpeg, image/png", "image/jpg"/> -->
-                                        <i class="fa fa-search fa-3x"></i>
+                                        <a type="button" onclick='checkUpload(image)' href = "result.html" class="file-input">
+                                          <i class="fa fa-search fa-3x"></i>
+                                        </a>
                                     </div>
                                   </div>
 
@@ -113,15 +114,7 @@
 
                     </div>
 
-                    <!-- End Upoload Section -->
-
-                    <!-- Start Reset-->
-
-                    <!-- End Reset-->
-
-                    <!-- Start Get tag-->
-
-                    <!-- End Get tag-->
+                    <!-- End Upoload and Search Section -->
           </div>
      </div>
 </section>
