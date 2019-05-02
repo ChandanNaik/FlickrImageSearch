@@ -52,3 +52,9 @@
       // read the image file as a data URL.
       reader.readAsDataURL(this.files[0]);
   });
+
+
+  function checkUpload(image)
+{
+    return false;
+}
