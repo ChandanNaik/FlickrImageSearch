@@ -3,11 +3,15 @@ from django.http import JsonResponse
 from django.urls import reverse
 from .models import imageModel
 from .forms import imageForm
+from .models import searchUploadModel
+from .forms import searchUploadForm
+from django.views.decorators.csrf import csrf_exempt
 
 import os
 import csv
 import json
 import boto3
+import shutil
 import datetime
 import flickrapi
 import urllib.request
@@ -23,6 +27,7 @@ from imageai.Detection import ObjectDetection
 
 from imageApp.flickrToS3 import performDumpFunction
 
+#detectorGlobal = None
 
 def search(request):
 	execution_path = os.getcwd()
@@ -69,7 +74,7 @@ def searchResults(request):
 			imageToSearch = request.GET.get('imageToSearch', None)
 
 			#Tags of image
-			listTags = cache.get('searchTags')
+			listTags = cache.get('prettySearchTags')
 
 			logging.debug("***^^^@@@")
 			logging.debug(listTags)
@@ -78,7 +83,7 @@ def searchResults(request):
 
 			#Returns a list of images that can be put into this dictionary 
 			data = {
-				'resultImageNames' : ['32528972147.jpg','40524736923.jpg','47427566762.jpg','33615774948.jpg', '47449061351.jpg']
+				'resultImageNames' : ['33736561448.jpg', '32637487007.jpg', '33792464088.jpg', '40633928313.jpg', '46650222305.jpg', '46742603185.jpg', '47636140071.jpg', '46818395984.jpg']
 			}
 			return JsonResponse(data)
 
@@ -91,3 +96,65 @@ def performDump(request):
 	performDumpFunction(request)
 
 	return render(request, 'imageApp/dumpToBucket.html')
+
+#///////////////////////////////////////////////////////////////////////////////////
+#/////////////////////////Functions with pretty HTML////////////////////////////////
+#///////////////////////////////////////////////////////////////////////////////////
+def searchPretty(request):
+
+	return render(request, 'imageApp/index.html')
+
+#search.detector = None
+
+@csrf_exempt
+def tagUploadedImage(request):
+
+	if not tagUploadedImage.detector1:
+		logging.debug("Initializing detector *@!")
+		execution_path = os.getcwd()
+		tagUploadedImage.detector1 = ObjectDetection()
+		tagUploadedImage.detector1.setModelTypeAsRetinaNet()
+		tagUploadedImage.detector1.setModelPath(os.path.join(execution_path , "imageApp", "resnet50_coco_best_v2.0.1.h5"))
+		tagUploadedImage.detector1.loadModel()	
+
+	if request.method == 'POST':
+		#Ensure only one image is in the model 
+		if(searchUploadModel.objects.all().count()>0):
+			searchUploadModel.objects.all().delete()
+		form = searchUploadForm(request.POST, request.FILES)
+		if form.is_valid():
+			searchUploadModel.objects.all().delete()
+			newImage = searchUploadModel(upload = request.FILES['upload'])
+
+			#Clear folder
+			execution_path = os.getcwd()
+			folder = os.path.join(execution_path , "imageApp/static/imageApp/uploads")
+			for root, dirs, files in os.walk(folder):
+				for f in files:
+					os.unlink(os.path.join(root, f))
+				for d in dirs:
+					shutil.rmtree(os.path.join(root, d))
+			newImage.save()
+			image = searchUploadModel.objects.all()
+			inputPath = os.path.join(execution_path , "imageApp/static/imageApp/uploads", image[0].upload.name)
+			newInputPath = os.path.join(execution_path , "imageApp/static/imageApp/uploads", "uploadedImage.jpg")
+			os.rename(inputPath, newInputPath)
+
+		#Tag image using ML model
+		outputPath = os.path.join(execution_path , "imageApp/static/imageApp/results", "taggedSearchImage.jpg")
+		inputPath = os.path.join(execution_path , "imageApp/static/imageApp/uploads", "uploadedImage.jpg")
+		detections = tagUploadedImage.detector1.detectObjectsFromImage(input_image=inputPath, output_image_path=outputPath)
+		listTags = []
+		for eachObject in detections:
+			listTags.append((eachObject["name"],eachObject["percentage_probability"]/100))
+
+		cache.clear()
+		cache.set('prettySearchTags', listTags)		
+
+
+	return render(request, 'imageApp/index.html')
+
+tagUploadedImage.detector1 = None
+
+def results(request):
+	return render(request, 'imageApp/result.html')	
