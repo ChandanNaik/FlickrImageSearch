@@ -47,12 +47,23 @@ def insertImage(image, query):
 	if x.count()==0:
 		x = collect.insert_one(query)
 
-def insertIndex(cnt, query):
-	client= pym.MongoClient('localhost', 27017)
-	collect=client.imageSearch.InvertedIndex
-	x=collect.find({"id":cnt})
-	if x.count()==0:
-		x = collect.insert_one(query)
+def insertIndex(image, query):#,invertedIndex):
+    client= pym.MongoClient('localhost', 27017)
+    collect=client.imageSearch.imageDB
+    collectIndex=client.imageSearch.imageIndex
+    x=collect.find({"name":image})
+    
+    if x.count()==0:
+        x = collect.insert(query)        
+        lstTags=list(set(list(query["objDetTags"].keys())+list(query["flickrTags"].keys())))
+        for j in lstTags:
+            y=collectIndex.find({"tag":str(j)})
+            if y.count()==0:
+                print({'tag':str(j),str(j):[x]})
+                collectIndex.insert({'tag':str(j),str(j):[x]})              
+            else:
+                collectIndex.update({'tag':str(j)},{'$push': {str(j): x}})         
+    return
 
 def performDumpFunction(request):
 	#////////////////////////////////////////////////
@@ -73,9 +84,9 @@ def performDumpFunction(request):
 	#Around 200 days for 100k photos if 500 photos per day
 
 	#From date
-	date1 = '2019-04-02' 
+	date1 = '2019-04-01' 
 	#To date
-	date2 = '2019-04-03' 
+	date2 = '2019-04-30' 
 	start = datetime.datetime.strptime(date1, '%Y-%m-%d')
 	end = datetime.datetime.strptime(date2, '%Y-%m-%d')
 	step = datetime.timedelta(days=1)
@@ -90,7 +101,7 @@ def performDumpFunction(request):
 		logging.debug(start.date())
 		
 		#Get 2 most interesting photos for the this date
-		apiResult = flickr.interestingness.getList(date = str(start.date()), per_page = '2') 
+		apiResult = flickr.interestingness.getList(date = str(start.date()), per_page = '3') 
 		photos = apiResult["photos"]["photo"]
 
 		#Dump one by one in S3 bucket
@@ -146,7 +157,7 @@ def performDumpFunction(request):
 				
 				logging.debug(image_dictionary)
 
-				insertImage(image_dictionary['name'], image_dictionary)
+				insertIndex(image_dictionary['name'], image_dictionary)
 				photoCnt+=1
 				
 				#Upload image to S3 Bucket
@@ -157,5 +168,7 @@ def performDumpFunction(request):
 				logging.debug("FAILED to dump photo with ID: "+photo["id"])
 
 		start += step
+
+
 
 	#our_bucket.download_file('testing.jpg','testing_download.jpg')

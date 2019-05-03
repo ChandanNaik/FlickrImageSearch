@@ -1,0 +1,4 @@
+flickrapi
+pymongo
+django-storages
+brew services start mongodb
