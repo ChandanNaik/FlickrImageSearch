@@ -12,10 +12,13 @@ import csv
 import json
 import boto3
 import shutil
+import operator
 import datetime
 import flickrapi
 import urllib.request
 from collections import defaultdict
+
+import numpy as np
 
 import pymongo as pym
 
@@ -27,7 +30,9 @@ from imageai.Detection import ObjectDetection
 
 from imageApp.flickrToS3 import performDumpFunction
 
-#detectorGlobal = None
+from bson.objectid import ObjectId
+
+
 
 def search(request):
 	execution_path = os.getcwd()
@@ -70,22 +75,32 @@ def search(request):
 search.detector = None
 	
 def searchResults(request):
-			#Image model object to search with/ get path of where user given image is
-			imageToSearch = request.GET.get('imageToSearch', None)
 
-			#Tags of image
-			listTags = cache.get('prettySearchTags')
+	userImage = cache.get('prettySearchTags')
+	logging.debug('********')
+	logging.debug(userImage)
 
-			logging.debug("***^^^@@@")
-			logging.debug(listTags)
+	userTagList=list(userImage["objDetTags"].keys())+list(userImage["flickrTags"].keys())
 
-			#Call to function which returns names of 20 most similar images
+	requiredIndex=indexRetrieval(userTagList)
 
-			#Returns a list of images that can be put into this dictionary 
-			data = {
-				'resultImageNames' : ['33736561448.jpg', '32637487007.jpg', '33792464088.jpg', '40633928313.jpg', '46650222305.jpg', '46742603185.jpg', '47636140071.jpg', '46818395984.jpg']
-			}
-			return JsonResponse(data)
+	iVD=imageVectorDict(requiredIndex)
+
+	rankedImages = rankImage(userImage,iVD,10)
+	lst=[]
+	for i in rankedImages:
+		lst.append(i[0])
+
+	logging.debug("**^^&&")
+	logging.debug(rankedImages)
+
+	#Call to function which returns names of 20 most similar images
+
+	#Returns a list of images that can be put into this dictionary 
+	data = {
+		'resultImageNames' : lst #['33736561448.jpg', '32637487007.jpg', '33792464088.jpg', '40633928313.jpg', '46650222305.jpg', '46742603185.jpg', '47636140071.jpg', '46818395984.jpg']
+	}
+	return JsonResponse(data)
 
 def dumpToBucket(request):
 	return render(request, 'imageApp/dumpToBucket.html')
@@ -97,6 +112,48 @@ def performDump(request):
 
 	return render(request, 'imageApp/dumpToBucket.html')
 
+#///////////////////////////////////////////////////////////////////////////////////
+#/////////////////////////Similar Image Retrieval///////////////////////////////////
+#///////////////////////////////////////////////////////////////////////////////////
+def indexRetrieval(userTagList):
+    locationLst=[]
+    client= pym.MongoClient('localhost', 27017)
+    collectIndex=client.imageSearch.imageIndex
+    for i in userTagList:
+        x=collectIndex.find({"tag":i})
+        for y in x:
+            locationLst=locationLst+y[i]
+    return set(locationLst)
+
+def imageVectorDict(requiredIndex):
+    client= pym.MongoClient('localhost', 27017)
+    collect=client.imageSearch.imageDB
+    lst=[]
+    for obj_id_to_find in requiredIndex:
+        lst+=[i for i in collect.find({"_id": ObjectId(obj_id_to_find)})]
+    return lst
+
+def cosineEq(vec1,vec2):
+    v1,v2={},{}
+    v1.update(vec1['objDetTags'])
+    v1.update(vec1['flickrTags'])
+    
+    v2.update(vec2['objDetTags'])
+    v2.update(vec2['flickrTags'])
+    
+    num = sum(v1[key]*v2.get(key, 0) for key in v1)
+    dnum= np.linalg.norm(list(v1.values())) * np.linalg.norm(list(v2.values()))
+    if num == 0:
+        return 0
+    return float(num/dnum)
+
+def rankImage(img,imgList,rank):
+    confdict={}
+    v1=img
+    for i in imgList:
+        confdict[i['name']]=cosineEq(v1,i)
+    conf=sorted(confdict.items() ,key = operator.itemgetter(1),reverse=True)[:rank]
+    return conf
 #///////////////////////////////////////////////////////////////////////////////////
 #/////////////////////////Functions with pretty HTML////////////////////////////////
 #///////////////////////////////////////////////////////////////////////////////////
@@ -144,12 +201,28 @@ def tagUploadedImage(request):
 		outputPath = os.path.join(execution_path , "imageApp/static/imageApp/results", "taggedSearchImage.jpg")
 		inputPath = os.path.join(execution_path , "imageApp/static/imageApp/uploads", "uploadedImage.jpg")
 		detections = tagUploadedImage.detector1.detectObjectsFromImage(input_image=inputPath, output_image_path=outputPath)
-		listTags = []
+
+		userTagsCombined = dict()
+		userTagsCombined["name"]='uploadedImage.jpg'
+		
+		mlTags = {}
 		for eachObject in detections:
-			listTags.append((eachObject["name"],eachObject["percentage_probability"]/100))
+			mlTags[eachObject["name"]]=eachObject["percentage_probability"]/100
+
+		userTagsCombined["objDetTags"]=mlTags
+
+		userlistTag=["abs","efe","hejhe"]
+		
+		userTags={}
+		for i in userlistTag:
+			userTags[i]=1   
+		
+		userTagsCombined["flickrTags"]=userTags
+
 
 		cache.clear()
-		cache.set('prettySearchTags', listTags)		
+		cache.set('prettySearchTags', userTagsCombined)	
+	
 
 
 	return render(request, 'imageApp/index.html')
