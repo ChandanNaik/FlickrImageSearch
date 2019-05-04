@@ -36,8 +36,6 @@ def insertImage(image, query):#,invertedIndex):
                 collectIndex.update({'tag':str(j)},{'$push': {str(j): x}})         
     return 
 
-
-#invertedIndex=defaultdict(list)
 for j in range(len(multiple)):
     insertImage(multiple[j]["name"], multiple[j])#,invertedIndex)
 ######################################################################################3
@@ -67,8 +65,6 @@ def imageVectorDict(requiredIndex):
     return lst
 
 iVD=imageVectorDict(requiredIndex)
-
-#userImage={ "name" : "46803879754.jpg", "objDetTags" : { "bird" : 0.9989371299743652 }, "flickrTags" : { "merlo" : 1, "narcis" : 1, "voorjaarsbloeier" : 1, "val" : 1, "baganza" : 1, "coth5" : 1 }}
 
 def cosineEq(vec1,vec2):
     v1,v2={},{}
