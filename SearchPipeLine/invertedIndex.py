@@ -6,6 +6,7 @@ Created on Sat Apr 27 18:26:25 2019
 """
 from collections import defaultdict
 import pymongo as pym
+
 multiple= [ {  "name" : "46797515834.jpg", "objDetTags" : { "bird" : 0.9995936751365662 }, "flickrTags" : {  } },
            {"name" : "47470744832.jpg", "objDetTags" : { "bird" : 0.9995936751365662 }, "flickrTags" : { "daffodil" : 1, "narcis" : 1, "voorjaarsbloeier" : 1, "lente" : 1, "spring" : 1, "vintage lens" : 1, "meyer-optik" : 1, "helioplan 40mm f4,5" : 1, "flare" : 1, "explored" : 1 } },
            { "name" : "46614463795.jpg", "objDetTags" : { "person" : 0.5942013263702393 }, "flickrTags" : { "aonb" : 1, "what" : 1, "beautiful" : 1, "clouds" : 1, "corfe" : 1, "castle" : 1, "dorset" : 1, "dawn" : 1, "rural" : 1, "countryside" : 1, "village" : 1, "history" : 1, "iconic" : 1, "famous" : 1, "england" : 1, "god's" : 1, "rays" : 1, "crepuscular" : 1, "landscape" : 1, "natural" : 1, "purbecks" : 1, "ruins" : 1, "sky" : 1, "tokina 11-20" : 1, "sunrise" : 1 } },
@@ -36,7 +37,7 @@ def insertImage(image, query):#,invertedIndex):
     return 
 
 
-invertedIndex=defaultdict(list)
+#invertedIndex=defaultdict(list)
 for j in range(len(multiple)):
     insertImage(multiple[j]["name"], multiple[j])#,invertedIndex)
 ######################################################################################3
@@ -67,7 +68,7 @@ def imageVectorDict(requiredIndex):
 
 iVD=imageVectorDict(requiredIndex)
 
-userImage={ "name" : "46803879754.jpg", "objDetTags" : { "bird" : 0.9989371299743652 }, "flickrTags" : { "merlo" : 1, "narcis" : 1, "voorjaarsbloeier" : 1, "val" : 1, "baganza" : 1, "coth5" : 1 }}
+#userImage={ "name" : "46803879754.jpg", "objDetTags" : { "bird" : 0.9989371299743652 }, "flickrTags" : { "merlo" : 1, "narcis" : 1, "voorjaarsbloeier" : 1, "val" : 1, "baganza" : 1, "coth5" : 1 }}
 
 def cosineEq(vec1,vec2):
     v1,v2={},{}
@@ -101,88 +102,25 @@ rankImage(userImage,iVD,10)
 
 
 
+listTags=[]
+userTags = dict()
+detections=[{'name': 'train', 'percentage_probability': 76.20946168899536, 'box_points': [ 71, 167, 423, 244]},
+             {'name': 'bird', 'percentage_probability': 96.20946168899536, 'box_points': [ 77, 165, 433, 254]}]
 
+userTags["name"]='shdgjdf.jpg'
+mlTags = {}
 
+for eachObject in detections:
+    mlTags[eachObject["name"]]=eachObject["percentage_probability"]/100
 
+userTags["objDetTags"]=mlTags
 
+userlistTag=["abs","efe","hejhe"]
 
+for i in userlistTag:
+    userTag[i]=1   
+userTags["flickrTags"]=userTag
 
-
-    if key in syn_wd.keys():
-        syn_wd[key]=1
-    
-    for i,item in enumerate(jow):        
-        wd1=dict(jow.get(item))
-        if key in wd1.keys():
-            wd1[key]=1
-        cos_sim=cosine_sim(syn_wd,wd1)
-        confdict[item]= cos_sim
-    conf=sorted(confdict.items() ,key = operator.itemgetter(1),reverse=True)[:rank_cutoff]
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def cosine_sim(v1, v2):
-    num = sum(v1[key]*v2.get(key, 0) for key in v1)
-    dnum= np.linalg.norm(list(v1.values())) * np.linalg.norm(list(v2.values()))
-    if num == 0:
-        return 0
-    return float(num/dnum)
-
-
-def wdimp(jow,wd,rank_cutoff):
-    confdict={}
-    key='rare'
-    
-    syn_wd=dict(jow.get(wd))
-    if key in syn_wd.keys():
-        syn_wd[key]=1
-    
-    for i,item in enumerate(jow):        
-        wd1=dict(jow.get(item))
-        if key in wd1.keys():
-            wd1[key]=1
-        cos_sim=cosine_sim(syn_wd,wd1)
-        confdict[item]= cos_sim
-    conf=sorted(confdict.items() ,key = operator.itemgetter(1),reverse=True)[:rank_cutoff]
-    ##conf=sorted(confdict.items(),key = confdict.get,reverse=True)
-    ##covert to dictionary??
-    return conf  
-
-
-
-
-
-
-
-collectIndex=client.imageSearch.imageIndex
-collectIndex.insert(invertedIndex)
-
-new_tag= ObjectId('5cc7c885d48679e59052123c')
-   
-    
+for k in range(len(listName)):
+    tagname=listName[k][0].lower()
+	 mlTags[tagname]=listName[k][1]
