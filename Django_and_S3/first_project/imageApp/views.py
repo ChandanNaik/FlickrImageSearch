@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse 
+from django.http import JsonResponse
 from django.urls import reverse
 from .models import imageModel
 from .forms import imageForm
@@ -59,9 +59,9 @@ def search(request):
 			cache.set('searchTags', listTags)
 
 			return render(request, 'imageApp/search.html', {'image':image, 'form':form, 'imagePath':"/static/imageApp/searchUploads/"+ image[0].imageFile.name})
-			
+
 	else:
-		if not search.detector: 
+		if not search.detector:
 			search.detector = ObjectDetection()
 			search.detector.setModelTypeAsRetinaNet()
 			search.detector.setModelPath(os.path.join(execution_path , "imageApp", "resnet50_coco_best_v2.0.1.h5"))
@@ -73,7 +73,7 @@ def search(request):
 		return render(request, 'imageApp/search.html', {'image':image, 'form':form})
 
 search.detector = None
-	
+
 def searchResults(request):
 
 	userImage = cache.get('prettySearchTags')
@@ -96,7 +96,7 @@ def searchResults(request):
 
 	#Call to function which returns names of 20 most similar images
 
-	#Returns a list of images that can be put into this dictionary 
+	#Returns a list of images that can be put into this dictionary
 	data = {
 		'resultImageNames' : lst #['33736561448.jpg', '32637487007.jpg', '33792464088.jpg', '40633928313.jpg', '46650222305.jpg', '46742603185.jpg', '47636140071.jpg', '46818395984.jpg']
 	}
@@ -137,10 +137,10 @@ def cosineEq(vec1,vec2):
     v1,v2={},{}
     v1.update(vec1['objDetTags'])
     v1.update(vec1['flickrTags'])
-    
+
     v2.update(vec2['objDetTags'])
     v2.update(vec2['flickrTags'])
-    
+
     num = sum(v1[key]*v2.get(key, 0) for key in v1)
     dnum= np.linalg.norm(list(v1.values())) * np.linalg.norm(list(v2.values()))
     if num == 0:
@@ -172,10 +172,10 @@ def tagUploadedImage(request):
 		tagUploadedImage.detector1 = ObjectDetection()
 		tagUploadedImage.detector1.setModelTypeAsRetinaNet()
 		tagUploadedImage.detector1.setModelPath(os.path.join(execution_path , "imageApp", "resnet50_coco_best_v2.0.1.h5"))
-		tagUploadedImage.detector1.loadModel()	
+		tagUploadedImage.detector1.loadModel()
 
 	if request.method == 'POST':
-		#Ensure only one image is in the model 
+		#Ensure only one image is in the model
 		if(searchUploadModel.objects.all().count()>0):
 			searchUploadModel.objects.all().delete()
 		form = searchUploadForm(request.POST, request.FILES)
@@ -204,7 +204,7 @@ def tagUploadedImage(request):
 
 		userTagsCombined = dict()
 		userTagsCombined["name"]='uploadedImage.jpg'
-		
+
 		mlTags = {}
 		for eachObject in detections:
 			mlTags[eachObject["name"]]=eachObject["percentage_probability"]/100
@@ -212,17 +212,17 @@ def tagUploadedImage(request):
 		userTagsCombined["objDetTags"]=mlTags
 
 		userlistTag=["abs","efe","hejhe"]
-		
+
 		userTags={}
 		for i in userlistTag:
-			userTags[i]=1   
-		
+			userTags[i]=1
+
 		userTagsCombined["flickrTags"]=userTags
 
 
 		cache.clear()
-		cache.set('prettySearchTags', userTagsCombined)	
-	
+		cache.set('prettySearchTags', userTagsCombined)
+
 
 
 	return render(request, 'imageApp/index.html')
@@ -230,4 +230,10 @@ def tagUploadedImage(request):
 tagUploadedImage.detector1 = None
 
 def results(request):
-	return render(request, 'imageApp/result.html')	
+	return render(request, 'imageApp/result.html')
+
+def about(request):
+	return render(request, 'imageApp/about.html')
+
+def gallery(request):
+	return render(request, 'imageApp/gallery.html')

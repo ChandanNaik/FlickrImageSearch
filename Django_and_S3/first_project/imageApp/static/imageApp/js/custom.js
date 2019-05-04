@@ -55,7 +55,7 @@
       let req = new XMLHttpRequest();
       let formData = new FormData();
 
-      formData.append("upload", this.files[0]);                                
+      formData.append("upload", this.files[0]);
       req.open("POST", '/pretty/tagUploadedImage/');
       req.send(formData);
   });
@@ -72,10 +72,46 @@ $("#viewSimilar").click(function (e) {
          for (imageName in data['resultImageNames']) {
             //var result = "<li>" + '<img src= "https://s3-us-west-1.amazonaws.com/flickrbigdatacu/'+data['resultImageNames'][imageName]+'">' + "</li>";
             var result = '<div class="col-md-6 col-sm-6">' + '<div class="gallery-thumb">'+ '<a class="image-popup">'+'<img src= "https://s3-us-west-1.amazonaws.com/flickrbigdatacu/'+data['resultImageNames'][imageName]+'"'+' alt="Gallery Image">'+'</a>'+'</div>'+'</div>';
-            $("#resultImages").append(result); 
+            $("#resultImages").append(result);
           }
       }
     });
 
   });
 
+
+  /* Search Validation
+  -----------------------------------------------*/
+
+  var hash = { '.jpeg'  : 1 , '.jpg' : 1, '.png' : 1, };
+  function checkUpload(filename,submitId)
+  {
+    var re = /\..+$/;
+    var ext = filename.match(re);
+    if (hash[ext])
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  function checkBeforeSearch(uploadValue, uploadID, redirect)
+  {
+      var status = checkUpload(uploadValue, uploadID)
+
+      if(status)
+      {
+        // Lazy loading, need a better way? Yes ofcourse need a better way :D
+        var delayInMilliseconds = 5000;
+        setTimeout(function() { window.location = redirect;}, delayInMilliseconds);
+      }
+
+      else if(!status)
+      {
+        alert("File not uploaded OR Invalid file upload.");
+      }
+
+  }
