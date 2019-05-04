@@ -44,10 +44,13 @@ decorator==4.4.0
 defusedxml==0.5.0
 distributed==1.26.0
 Django==2.2
+django-photologue==3.9
+django-sortedm2m==1.5.0
 django-storages==1.7.1
 docutils==0.14
 entrypoints==0.3
 et-xmlfile==1.0.1
+ExifRead==2.1.2
 fastcache==1.0.2
 filelock==3.0.10
 Flask==1.0.2
