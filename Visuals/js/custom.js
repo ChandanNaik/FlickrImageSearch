@@ -1,4 +1,11 @@
 
+  /*-------------------------------------------------------------------------------
+    ON PAGE LOAD
+  -------------------------------------------------------------------------------*/
+// $(document).ready(function() 
+//   { alert("File load");
+//     document.getElementById("searchButton").disabled = true;
+//   });
 
   /*-------------------------------------------------------------------------------
     PRE LOADER
@@ -36,7 +43,7 @@
       $('html, body').animate({scrollTop: 0}, 300);
       })
 
-  /* Upload Image
+  /* Upload Image and Validation
   -----------------------------------------------*/
 
   $('.file-input').change(function(){
@@ -48,13 +55,44 @@
           // get loaded data and render thumbnail.
           curElement.attr('src', e.target.result);
       };
-
       // read the image file as a data URL.
       reader.readAsDataURL(this.files[0]);
   });
 
 
-  function checkUpload(image)
-{
-    return false;
-}
+  /* Search Validation
+  -----------------------------------------------*/
+
+  var hash = { '.jpeg'  : 1 , '.jpg' : 1, '.png' : 1, };
+  function checkUpload(filename,submitId)
+  {
+    var re = /\..+$/;
+    var ext = filename.match(re);
+    if (hash[ext]) 
+    {
+      return true;
+    } 
+    else 
+    {
+      return false;
+    }
+  }
+  
+  function checkBeforeSearch(uploadValue, uploadID, redirect)
+  {
+      var status = checkUpload(uploadValue, uploadID)
+
+      if(status)
+      {
+        var delayInMilliseconds = 1000;
+        setTimeout(function() { window.location = redirect;}, delayInMilliseconds);
+      }
+
+      else if(!status)
+      {
+        alert("File not uploaded OR Invalid file upload.");
+      }
+
+  }
+
+

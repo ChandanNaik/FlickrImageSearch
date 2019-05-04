@@ -93,14 +93,14 @@
 
                                   <div class="uploadWrapper">
                                     <div class="file-upload" style="font-size: 1rem;">
-                                        <input type="file" class="file-input" accept="image/jpeg, image/png, image/jpg"/>
+                                        <input type="file" id ="uploadSection" class="file-input" accept="image/jpeg, image/png, image/jpg"/>
                                         <i class="fa fa-arrow-up fa-3x"></i>
                                     </div>
                                     <span>
                                       &nbsp &nbsp
                                     </span>
                                     <div class="file-upload" style="font-size: 1rem;">
-                                        <a type="button" onclick='checkUpload(image)' href = "result.html" class="file-input">
+                                        <a type="button" id ="searchButton" onclick = 'checkBeforeSearch(uploadSection.value,"uploadSection","result.html")' class="file-input">
                                           <i class="fa fa-search fa-3x"></i>
                                         </a>
                                     </div>

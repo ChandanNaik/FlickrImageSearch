@@ -95,8 +95,8 @@ a:hover, a:active, a:focus {
 #contact,
 #blog,
 #blog-single-post {
-  padding-top: 60px;
-  padding-bottom: 80px;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
 .main-about,
@@ -443,7 +443,7 @@ a:hover, a:active, a:focus {
 
 .blog-post-thumb {
   border-bottom: 1px solid #f0f0f0;
-  padding-top: 32px;
+  /*padding-top: 32px;*/
   padding-bottom: 62px;
   margin-bottom: 32px;
 }
@@ -494,6 +494,7 @@ a:hover, a:active, a:focus {
 }
 
 .blog-post-des blockquote {
+  padding-left: 370px;
   margin: 22px;
 }
 
@@ -595,7 +596,6 @@ a:hover, a:active, a:focus {
   border-color: transparent;
   color: #ffffff;
 }
-
 
 
 /*---------------------------------------
@@ -844,10 +844,12 @@ footer hr {
 	position:relative;
 	display: inline-block;
 	line-height: 0;
+  padding-left: 200px; 
 }
+
 .image-slider img {
-	user-select: none;
-	max-width: 600px;
+  user-select: none;
+  max-width: 600px;
 }
 .image-slider > div {
 	position: absolute;
