@@ -83,11 +83,11 @@ $("#viewSimilar").click(function (e) {
   /* Search Validation
   -----------------------------------------------*/
 
-  var hash = { '.jpeg'  : 1 , '.jpg' : 1, '.png' : 1, };
+  var hash = { 'jpeg'  : 1 , 'jpg' : 1, 'png' : 1, };
   function checkUpload(filename,submitId)
   {
-    var re = /\..+$/;
-    var ext = filename.match(re);
+    var ext = filename.split('.').pop();
+
     if (hash[ext])
     {
       return true;
