@@ -847,7 +847,7 @@ footer hr {
   position:relative;
   display: inline-block;
   line-height: 0;
-	padding-left: 200px;
+	padding-left: 0px;
 }
 .image-slider img {
   user-select: none;

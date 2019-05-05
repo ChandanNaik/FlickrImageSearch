@@ -5,7 +5,9 @@
   -------------------------------------------------------------------------------*/
 
   $(window).load(function(){
-    $('.preloader').fadeOut(1000); // set duration in brackets
+    $('.preloader').width("70%").height("70%");
+    $('.preloader').offset({top:100,left:100})
+    $('.preloader').fadeOut(6000); // set duration in brackets
   });
 
 
@@ -62,8 +64,10 @@
 
 $("#viewSimilar").click(function (e) {
   e.preventDefault();
-  var searchText = {'searchText': $("textarea").val()};
+  var searchText = {'searchText': "i am the search text"};
   $.post('/imageSearch/updateUserTags/', searchText, function(response){
+        if(response === 'success'){ console.log('Yay!'); }
+        else{ console.log('Error! :('); }
     });
   $.ajax({
       type: "GET",
@@ -89,39 +93,4 @@ $("#viewSimilar").click(function (e) {
   });
 
 
-  /* Search Validation
-  -----------------------------------------------*/
-
-  var hash = { '.jpeg'  : 1 , '.jpg' : 1, '.png' : 1, };
-  function checkUpload(filename,submitId)
-  {
-    var ext = filename.split('.').pop();
-
-    if (hash[ext])
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-
-  function checkBeforeSearch(uploadValue, uploadID, redirect)
-  {
-      var status = checkUpload(uploadValue, uploadID)
-
-      if(status)
-      {
-        //Lazy loading, need a better way? Yes ofcourse need a better way :D
-        //var delayInMilliseconds = 5000;
-        //setTimeout(function() { window.location = redirect;}, delayInMilliseconds);
-        window.location = redirect;
-      }
-
-      else if(!status)
-      {
-        alert("File not uploaded OR Invalid file upload.");
-      }
-}
 
