@@ -25,7 +25,7 @@ SECRET_KEY = 'flkzov$^n0y5c=!&pc=ak%d56%d-hxw$e=w7qf*yoi9-k9_ypw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

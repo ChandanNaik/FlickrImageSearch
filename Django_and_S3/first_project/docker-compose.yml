@@ -1,113 +1,12 @@
-<<<<<<< HEAD
 version: '3.1'
 
-#volumes:
-#  init-db:
-#  data-db:
-
 services:
-  mongodb:
-    image: mongo
-    command: mongod --storageEngine wiredTiger
-    restart: always
-    # volumes:
-    #  - ./init-db:/docker-entrypoint-initdb.d
-    #  - ./data-db:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
-      MONGO_INITDB_DATABASE: first_project
-    ports:
-      - 27017:27017
-      
   web:
-    image: app
-    restart: always
+    build: .
     command: python manage.py runserver 0.0.0.0:8000
-    #volumes:
-    #  - .:/first_project
+    command: bash -c "while :; do echo '.'; sleep 5 ; done"
+   # container_name: first_project
+   # volumes:
+   # - .:/first_project
     ports:
       - 8000:8000
-    links:
-      - mongodb
-    depends_on:
-      - migration
-
-  migration:
-    build: .
-    image: app
-    command: python manage.py migrate
-    #volumes:
-    #  - .:/first_project
-    links:
-      - mongodb
-    depends_on:
-      - make_migrations
-
-  make_migrations:
-    build: .
-    image: app
-    command: python manage.py makemigrations
-    #volumes:
-    #  - .:/first_project
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
-=======
-version: '3.1'
-
-#volumes:
-#  init-db:
-#  data-db:
-
-services:
-  mongodb:
-    image: mongo
-    command: mongod --storageEngine wiredTiger
-    restart: always
-    # volumes:
-    #  - ./init-db:/docker-entrypoint-initdb.d
-    #  - ./data-db:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
-      MONGO_INITDB_DATABASE: first_project
-    ports:
-      - 27017:27017
-      
-  web:
-    image: app
-    restart: always
-    command: python manage.py runserver 0.0.0.0:8000
-    #volumes:
-    #  - .:/first_project
-    ports:
-      - 8000:8000
-    links:
-      - mongodb
-    depends_on:
-      - migration
-
-  migration:
-    build: .
-    image: app
-    command: python manage.py migrate
-    #volumes:
-    #  - .:/first_project
-    links:
-      - mongodb
-    depends_on:
-      - make_migrations
-
-  make_migrations:
-    build: .
-    image: app
-    command: python manage.py makemigrations
-    #volumes:
-    #  - .:/first_project
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
->>>>>>> 548cdf4f203b0ec8f3438fa64c08db095181aa52

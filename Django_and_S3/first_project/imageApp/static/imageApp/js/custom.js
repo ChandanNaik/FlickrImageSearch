@@ -56,7 +56,7 @@
       let formData = new FormData();
 
       formData.append("upload", this.files[0]);                                
-      req.open("POST", '/pretty/tagUploadedImage/');
+      req.open("POST", '/flickrImageSearch/tagUploadedImage/');
       req.send(formData);
   });
 
@@ -92,9 +92,10 @@ $("#viewSimilar").click(function (e) {
   /* Search Validation
   -----------------------------------------------*/
 
-  var hash = { '.jpeg'  : 1 , '.jpg' : 1, '.png' : 1, };
+  var hash = { 'jpeg'  : 1 , 'jpg' : 1, 'png' : 1, };
   function checkUpload(filename,submitId)
   {
+    
     var ext = filename.split('.').pop();
 
     if (hash[ext])

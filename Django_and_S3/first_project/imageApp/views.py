@@ -34,7 +34,7 @@ from imageApp.flickrToS3 import performDumpFunction1
 
 from bson.objectid import ObjectId
 
-
+client= pym.MongoClient('mongodb+srv://thanika28:p60AY4MiEsSsMh5i@firstprojectcluster-7hgfv.gcp.mongodb.net/test?retryWrites=true', 27017)
 
 def search(request):
 	execution_path = os.getcwd()
@@ -119,7 +119,7 @@ def performDump(request):
 #///////////////////////////////////////////////////////////////////////////////////
 def indexRetrieval(userTagList):
     locationLst=[]
-    client= pym.MongoClient('localhost', 27017)
+    
     collectIndex=client.imageSearch.imageIndex
     for i in userTagList:
         x=collectIndex.find({"tag":i})
@@ -128,7 +128,7 @@ def indexRetrieval(userTagList):
     return set(locationLst)
 
 def imageVectorDict(requiredIndex):
-    client= pym.MongoClient('localhost', 27017)
+    
     collect=client.imageSearch.imageDB
     lst=[]
     for obj_id_to_find in requiredIndex:

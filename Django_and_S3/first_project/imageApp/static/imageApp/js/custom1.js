@@ -58,7 +58,7 @@
       let formData = new FormData();
 
       formData.append("upload", this.files[0]);                                
-      req.open("POST", '/pretty/tagUploadedImage/');
+      req.open("POST", '/flickrImageSearch/tagUploadedImage/');
       req.send(formData);
   });
 

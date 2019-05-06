@@ -84,9 +84,9 @@ def performDumpFunction(request):
 	#Around 200 days for 100k photos if 500 photos per day
 
 	#From date
-	date1 = '2019-04-11' 
+	date1 = '2019-04-1' 
 	#To date
-	date2 = '2019-04-19' 
+	date2 = '2019-04-10' 
 	start = datetime.datetime.strptime(date1, '%Y-%m-%d')
 	end = datetime.datetime.strptime(date2, '%Y-%m-%d')
 	step = datetime.timedelta(days=1)

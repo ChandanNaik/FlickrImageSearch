@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flickr-dep
+  labels:
+    #Project ID
+    app: myfirstproject-239707
+spec:
+  #Run two instances of our application
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: myfirstproject-239707
+    spec:
+      #Container details
+      containers:
+        - name: flickr-app
+          image: gcr.io/myfirstproject-239707/flickr-app:0.0.1
+          imagePullPolicy: Always
+          #Ports to expose
+          ports:
+          - containerPort: 8000
