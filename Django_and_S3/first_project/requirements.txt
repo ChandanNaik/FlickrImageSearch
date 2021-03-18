@@ -1,7 +1,7 @@
 boto==2.49.0
 boto3==1.9.138
 botocore==1.12.138
-Django==2.2
+Django==2.2.18
 django-storages==1.7.1
 flickrapi==2.4.0
 html5lib==1.0.1
