@@ -15,7 +15,7 @@ tensorflow-estimator==1.13.0
 numpy==1.16.2
 numpydoc==0.8.0
 scipy==1.2.1
-opencv-python==4.1.0.25
+opencv-python==4.1.1.26
 Pillow==5.4.1
 matplotlib==3.0.3
 pymongo[tls,srv]==3.6.1
